@@ -128,8 +128,10 @@ class UsrAjax extends ControllerAjax
                 $prf->save();
             }
             if (!$_REQUEST['idusuario'])
+            {
                 $usr->resetPassword();
-            $this->ajxRsp->alert('El password asignado a la cuenta es '.UsrUsuario::PASS_DEFAULT);
+                $this->ajxRsp->alert('El password asignado a la cuenta es '.UsrUsuario::PASS_DEFAULT);
+            }
             $this->ajxRsp->redirect(Controller::getLink('usr','usr','usuarios'));
 
         }
