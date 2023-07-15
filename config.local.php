@@ -4,8 +4,8 @@
  */
  
 /** Datos referentes al entorno del sistema */
-    define('SERVER_ENTORNO' , 'Produccion');
-    //define('SERVER_ENTORNO' , 'Test');
+    //define('SERVER_ENTORNO' , 'Produccion');
+    define('SERVER_ENTORNO' , 'Test');
 
     //Se define si se trata de un server WIN (No se requiere en server Linux)
     define('WIN_SERVER',true);
