@@ -136,16 +136,16 @@ class UsrController extends Controller
              return null;
         }
 
+        if ($idusuario)
+            $usr = new UsrUsuario($idusuario);
+        else
+            $usr = new UsrUsuario();
+
         if ($idusuario && $idusuario != $usr->get('idusuario'))
         {
              $this->adderror('Se debe especificar un Id valido');
              return null;
         }
-
-        if ($idusuario)
-            $usr = new UsrUsuario($idusuario);
-        else
-            $usr = new UsrUsuario();
 
         if (!$idusuario && $_REQUEST['idprofesional'])
         {
