@@ -7,6 +7,7 @@
     </div>
   </div>
 </div>
+<br/>
 {{data}}
 {{tabs}}
 {{hidden}}

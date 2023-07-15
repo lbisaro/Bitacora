@@ -7,6 +7,7 @@
     </div>
   </div>
 </div>
+<br/>
 {{data}}
 {{tabs}}
 {{hidden}}
@@ -29,7 +30,16 @@
         goTo("app.profesional.editar+idprofesional="+idprofesional);    
     }
 
-        
+    function ficha(idprofesional)
+    {
+        goTo("app.profesional.ficha+idprofesional="+idprofesional);    
+    }
+
+    function crearUsuario(idprofesional)
+    {
+        goTo("usr.usr.editar+idprofesional="+idprofesional);    
+    }
+       
 
 
 

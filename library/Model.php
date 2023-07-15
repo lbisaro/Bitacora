@@ -90,7 +90,7 @@ abstract class Model extends Sql
     *
     * <li>static protected $idName   = Nombre del id al que se hace referencia, para obtebner los datos de la [db.]tabla.</li>
     *
-    * <li>protected $loadQuery       = Query Sql medienta el cual se realizara la carga de datos de Model::load() y Model::getDataset()
+    * <li>protected $loadQuery       = Query Sql mediante el cual se realizara la carga de datos de Model::load() y Model::getDataset()
     *
     * <li>protected $filterQuery     = Sentencia WHERE correspondiente al Query Sql que se anexara en todos los querys ejecutados,
     *                                  al realizar la carga de datos de Model::load() y Model::getDataset().

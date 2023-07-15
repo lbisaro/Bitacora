@@ -45,7 +45,7 @@
           <a class="nav-link rounded" href="usr.Usr.usuarios+"><span class="glyphicon glyphicon-cog"></span> Usuarios</a>
         </li>         
         <li class="nav-item">
-          <a class="nav-link rounded" href="usr.Usr.perfil+"><span class="glyphicon glyphicon-user"></span> Cuenta</a>
+          <a class="nav-link rounded" href="usr.Usr.perfil+"><span class="glyphicon glyphicon-user"></span> Perfil</a>
         </li>
         <li class="nav-item">
           <a class="nav-link rounded" href="usr.Usr.logout+"><span class="glyphicon glyphicon-log-out"></span> Salir</a>

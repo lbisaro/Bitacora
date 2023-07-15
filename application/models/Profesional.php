@@ -45,15 +45,33 @@ class Profesional extends ModelDB
         $err=null;
 
         // Control de errores
+        $idprofesional = $this->data['idprofesional'];
 
         if (!$this->data['ayn'])
+        {
             $err[] = 'Se debe especificar Apellido y Nombre';
+        }
         if (!$this->data['mail'])
+        {
             $err[] = 'Se debe especificar Mail';
+        }
+        if ($this->data['mail'] && !validarEmail($this->data['mail']))
+        {
+            $err[] = 'Se debe especificar Mail con formato valido';
+        }
+        // Validando que el mail no se encuentre previamente registrdo para otro usuario
+        if ($this->data['mail'] && $this->getDataSet("upper(profesional.mail) = '".$this->data['mail']."' ".($idprofesional?" AND idprofesional <> ".$idprofesional:"")))
+        {
+            $err[] = 'El mail ya se encuentra registrado para otro profesional';
+        }
         if (!$this->data['telefono'])
+        {
             $err[] = 'Se debe especificar Telefono';
+        }
         if (!$this->data['cargo'])
+        {
             $err[] = 'Se debe especificar Cargo';
+        }
 
 
         // FIN - Control de errores

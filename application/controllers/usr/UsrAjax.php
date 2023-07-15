@@ -2,6 +2,7 @@
 include_once LIB_PATH."Controller.php";
 include_once LIB_PATH."ControllerAjax.php";
 include_once MDL_PATH."usr/UsrUsuario.php";
+include_once MDL_PATH."Profesional.php";
 
 class UsrAjax extends ControllerAjax
 {
@@ -101,16 +102,57 @@ class UsrAjax extends ControllerAjax
         }
         else
         {
+            UsrUsuario::deleteAuthInstance();
             $this->ajxRsp->alert('El password se a modificado con exito!! Sera redireccionado al Login. Recuerde que su nuevo password es: "'.$arrDatos['password'].'"');
             $this->ajxRsp->redirect(Controller::getLink('Usr','Usr','login'));
         }
     }
+
+    function grabar()
+    {
+        $arrDatos = $_REQUEST;
+        $usr = new UsrUsuario($arrDatos['idusuario']);
+        $arrToSet['ayn'] = $arrDatos['ayn']; 
+        $arrToSet['username'] = $arrDatos['username']; 
+        $arrToSet['idperfil'] = $arrDatos['idperfil']; 
+        $arrToSet['mail'] = $arrDatos['mail']; 
+
+        $usr->set($arrToSet);
+        if($usr->save())
+        {
+            $idprofesional = $usr->get('idprofesional');
+            if ($idprofesional)
+            {
+                $prf = new Profesional($usr->get('idprofesional'));
+                $prf->set($arrToSet);
+                $prf->save();
+            }
+            $usr->resetPassword();
+            $this->ajxRsp->alert('El password asignado a la cuenta es '.UsrUsuario::PASS_DEFAULT);
+            $this->ajxRsp->redirect(Controller::getLink('usr','usr','usuarios'));
+
+        }
+        else
+        {
+            $this->ajxRsp->addError($usr->getErrLog()); 
+        }
+    }
+
 
     function toogleBlock()
     {
         $usr = new UsrUsuario($_REQUEST['idusuario']);
         $usr->toogleBlock();
         $this->ajxRsp->redirect(Controller::getLink('Usr','Usr','usuarios'));
+        
+    }
+
+    function resetPassword()
+    {
+        $usr = new UsrUsuario($_REQUEST['idusuario']);
+        $usr->resetPassword();
+        $this->ajxRsp->alert('El nuevo password asignado a la cuenta es '.UsrUsuario::PASS_DEFAULT);
+        $this->ajxRsp->redirect(Controller::getLink('Usr','Usr','ficha','idusuario='.$_REQUEST['idusuario']));
         
     }
 

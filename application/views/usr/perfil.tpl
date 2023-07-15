@@ -24,6 +24,13 @@
         </div>
 
         <div class="form-group row pass-form-hide">
+            <label for="mail" class="col-sm-2 col-form-label">Vencimiento del password</label>
+            <div class="col-sm-10 my-auto">
+                <strong>{{password_vto}}</strong>
+            </div>
+        </div>
+
+        <div class="form-group row pass-form-hide">
             <label for="mail" class="col-sm-2 col-form-label">Password</label>
             <div class="col-sm-10">
                 <button type="button" class="btn btn-primary btn-sm" onclick="showPassForm();">Modificar Password</button>

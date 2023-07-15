@@ -13,6 +13,12 @@ class UsrUsuario extends Model
     static protected $table  = 'usuario';
     static protected $idName = 'idusuario';
 
+    protected $loadQuery = "SELECT usuario.*,
+                                   profesional.idprofesional,
+                                   profesional.cargo 
+                            FROM usuario
+                            LEFT JOIN profesional ON profesional.mail = usuario.mail";
+
     // Tipos de usuario
     const USUARIO_CNS = 3;
     const USUARIO_OPR = 6;
@@ -47,7 +53,7 @@ class UsrUsuario extends Model
     // Politicas de contraseñas - Cantidad de passwords que no se pueden repetir
     const PASS_REPEAT = 6;
     // Politicas de contraseñas - Default password
-    const PASS_DEFAULT = 1234;
+    const PASS_DEFAULT = 'Bitacora1234';
 
     /**/
     function formatData()
@@ -150,7 +156,7 @@ class UsrUsuario extends Model
         }
 
         // Validando que el nombre no se encuentre previamente registrdo para otro usuario
-        if ($this->getDataSet("upper(ayn) = '".$ayn."' ".($idusuario?" AND idusuario <> ".$idusuario:"")))
+        if ($this->getDataSet("upper(usuario.ayn) = '".$ayn."' ".($idusuario?" AND idusuario <> ".$idusuario:"")))
         {
             $err++;
             $this->addErr('El nombre ya se encuentra registrado para otro usuario');
@@ -174,6 +180,21 @@ class UsrUsuario extends Model
                 }
             }
         }
+
+        if ($this->data['mail'] && !validarEmail($this->data['mail']))
+        {
+            $err++;
+            $this->addErr('Se debe especificar Mail con formato valido');
+        }
+        
+        // Validando que el mail no se encuentre previamente registrdo para otro usuario
+        if ($this->getDataSet("upper(usuario.mail) = '".$this->data['mail']."' ".($idusuario?" AND idusuario <> ".$idusuario:"")))
+        {
+            $err++;
+            $this->addErr('El mail ya se encuentra registrado para otro usuario');
+        }
+
+
 
         // Validando el Legajo en caso que se especifique
         if (!empty($this->data['legajo']) && !is_numeric($this->data['legajo']))
@@ -209,6 +230,12 @@ class UsrUsuario extends Model
             return true;
         }
         return false;
+    }
+
+    static public function deleteAuthInstance()
+    {
+        $_SESSION['Auth']          = null;
+        $_SESSION['SSN_idusuario'] = null;
     }
 
     static public function setAuthInternalInstance($idusuario)

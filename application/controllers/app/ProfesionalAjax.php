@@ -2,6 +2,7 @@
 include_once LIB_PATH."Controller.php";
 include_once LIB_PATH."ControllerAjax.php";
 include_once MDL_PATH."Profesional.php";
+include_once MDL_PATH."usr/UsrUsuario.php";
 
 /**
  * ProfesionalAjax
@@ -23,9 +24,20 @@ class ProfesionalAjax extends ControllerAjax
         $arrToSet['cargo'] = $_REQUEST['cargo'];
         $prf->set($arrToSet);
         if ($prf->save())
+        {
+            $idusuario = $prf->get('idusuario');
+            if ($idusuario)
+            {
+                $usr = new UsrUsuario($idusuario);
+                $usr->set($arrToSet);
+                $usr->save();
+            }
             $this->ajxRsp->redirect(Controller::getLink('app','profesional','listar'));
+        }
         else
+        {
             $this->ajxRsp->addError($prf->getErrLog());        
+        }
     }
     
     function toogleInactivo()

@@ -48,7 +48,6 @@ elseif ($_COOKIE['UID'])
 
 }
 
-
 if (strtolower($moduleName.$controllerName.$actionName) != strtolower('UsrUsrAjaxlogin'))
 {
     if (!$auth && !empty($moduleName) && !empty($controllerName) && !empty($actionName) )
@@ -94,8 +93,17 @@ elseif (substr($controllerName,strlen($controllerName)-4,4) == 'Ajax')
 }
 else
 {
+    if ($auth)
+    if ($auth && $auth->getPasswordVtoDias() < 1)
+    {
+        $moduleName = 'usr';
+        $controllerName = 'usr';
+        $actionName = 'perfil';
+        
+    }
     $addIndex = 'indexHtml.php';
     $controllerName = $controllerName.'Controller';
+
 }
 
 
