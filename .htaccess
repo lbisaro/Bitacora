@@ -1,0 +1,7 @@
+RewriteEngine on
+RewriteRule ^(.+)\.(.+)\.(.+)\+(.+)? index.php?mod=$1&ctrl=$2&act=$3&$4
+
+php_value upload_max_filesize 150M
+php_value post_max_size 150M
+php_value max_execution_time 800
+php_value max_input_time 800
