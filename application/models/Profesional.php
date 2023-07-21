@@ -1,5 +1,6 @@
 <?php
 include_once LIB_PATH."ModelDB.php";
+include_once MDL_PATH."Paciente.php";
 
 class Profesional extends ModelDB
 {
@@ -140,5 +141,86 @@ class Profesional extends ModelDB
     {
         return $this->getDataSet('inactivo < 1','ayn');
 
+    }
+
+    function asignarPaciente($idpaciente)
+    {
+        if (!$this->data['idprofesional'])
+            CriticalExit('Profesional::asignarPaciente() - Se debe especificar un id valido');
+        if (!$idpaciente)
+        {
+            $err[] = 'Se debe especificar un Paciente';
+        }
+        else
+        {
+            $pct = new Paciente($idpaciente);
+            if ($pct->get('idpaciente') != $idpaciente)
+                $err[] = 'Se debe especificar un Paciente valido';
+         
+            $pacientes = $this->getPacientesAsignados();
+            if (isset($pacientes[$idpaciente]))   
+                $err[] = 'El Paciente ya se encuentra asignado';
+        }
+
+
+        if (!empty($err))
+        {
+            $this->errLog->add($err);
+            return false;
+        }
+
+        $ins = 'INSERT INTO profesional_paciente (idprofesional,idpaciente) VALUES ('.$this->data['idprofesional'].','.$idpaciente.')';
+        $this->db->query($ins);
+        return true;
+
+    }
+
+    function desasignarPaciente($idpaciente)
+    {
+        if (!$this->data['idprofesional'])
+            CriticalExit('Profesional::asignarPaciente() - Se debe especificar un id valido');
+        if (!$idpaciente)
+        {
+            $err[] = 'Se debe especificar un Paciente';
+        }
+        else
+        {
+            $pct = new Paciente($idpaciente);
+            if ($pct->get('idpaciente') != $idpaciente)
+                $err[] = 'Se debe especificar un Paciente valido';
+         
+            $pacientes = $this->getPacientesAsignados();
+            if (!isset($pacientes[$idpaciente]))   
+                $err[] = 'El Paciente no se encuentra asignado';
+        }
+
+
+        if (!empty($err))
+        {
+            $this->errLog->add($err);
+            return false;
+        }
+
+        $ins = 'DELETE FROM profesional_paciente WHERE idprofesional = '.$this->data['idprofesional'].' AND idpaciente='.$idpaciente;
+        $this->db->query($ins);
+        return true;
+
+    }
+
+    function getPacientesAsignados()
+    {
+        if (!$this->data['idprofesional'])
+            CriticalExit('Profesional::asignarPaciente() - Se debe especificar un id valido');
+        $qry = 'SELECT paciente.* 
+                FROM profesional_paciente
+                LEFT JOIN paciente ON paciente.idpaciente = profesional_paciente.idpaciente 
+                WHERE profesional_paciente.idprofesional = '.$this->data['idprofesional'];
+        $stmt = $this->db->query($qry);
+        $pacientes = array();
+        while($rw = $stmt->fetch())
+        {
+            $pacientes[$rw['idpaciente']] = $rw;
+        } 
+        return $pacientes;
     }
 }

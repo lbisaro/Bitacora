@@ -46,4 +46,26 @@ class ProfesionalAjax extends ControllerAjax
         $prf->toogleInactivo();
         $this->ajxRsp->redirect(Controller::getLink('app','profesional','listar'));        
     }
+
+    function addPaciente()
+    {
+        $idprofesional = $_REQUEST['idprofesional'];
+        $idpaciente = $_REQUEST['idpaciente'];
+        $prf = new Profesional($idprofesional);
+        if ($prf->asignarPaciente($idpaciente))
+            $this->ajxRsp->redirect(Controller::getLink('app','profesional','ficha','idprofesional='.$idprofesional));
+        else
+            $this->ajxRsp->addError($prf->getErrLog()); 
+    }
+
+    function delPaciente()
+    {
+        $idprofesional = $_REQUEST['idprofesional'];
+        $idpaciente = $_REQUEST['idpaciente'];
+        $prf = new Profesional($idprofesional);
+        if ($prf->desasignarPaciente($idpaciente))
+            $this->ajxRsp->redirect(Controller::getLink('app','profesional','ficha','idprofesional='.$idprofesional));
+        else
+            $this->ajxRsp->addError($prf->getErrLog()); 
+    }
 }

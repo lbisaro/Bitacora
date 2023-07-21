@@ -3,6 +3,7 @@ include_once LIB_PATH."Controller.php";
 include_once LIB_PATH."Html.php";
 include_once LIB_PATH."HtmlTableDg.php";
 include_once MDL_PATH."Profesional.php";
+include_once MDL_PATH."Paciente.php";
 
 /**
  * Controller: ProfesionalController
@@ -102,7 +103,30 @@ class ProfesionalController extends Controller
         else
             $arr['usuario'] = '<span class="text-primary"><span class="glyphicon glyphicon-ok-circle"></span> '.$prf->get('username').'<span>';
 
-        
+        $pacientesAsignados = $prf->getPacientesAsignados();
+        $pct = new Paciente();
+        $pacientesDisponibles = $pct->getActivos();
+        foreach ($pacientesDisponibles as $idpaciente => $rw)
+        {
+            if (isset($pacientesAsignados[$idpaciente]))
+                unset($pacientesDisponibles[$idpaciente]);
+        }
+        foreach ($pacientesAsignados as $idpaciente => $rw)
+        {
+            $arr['pacientes_asignados'] .= '<div class="paciente_asignado" id="pa_'.$idpaciente.'">
+                                            <span id="paayn_'.$idpaciente.'" width="90%">'.$rw['ayn'].'</span>
+                                            <button class="btn btn-sm" onclick="delPaciente('.$idpaciente.')"><span class="glyphicon glyphicon-remove-sign text-danger"></span>
+                                            </div>';
+        }
+        if (!empty($pacientesDisponibles))
+        {
+            $arr['pacientes_asignados'] .= '<select id="add_paciente" class="form-control form-control-sm" onchange="addPaciente()">';
+            $arr['pacientes_asignados'] .= '<option value="0">Asignar nuevo paciente</option>';
+            foreach ($pacientesDisponibles as $idpaciente => $rw)
+                $arr['pacientes_asignados'] .= '<option value="'.$idpaciente.'">'.$rw['ayn'].'</option>';
+            $arr['pacientes_asignados'] .= '</select>';
+        }
+
         /*
         $dg = new HtmlTableDg();
         $dg->setCaption('Eventos');

@@ -2,6 +2,12 @@
   .data {
     font-weight: bolder;
   }
+
+  .paciente_asignado {
+    padding: 0px 3px 0px 13px;
+  }
+
+
 </style>
 <div class="container">
   <div class="row">
@@ -32,6 +38,10 @@
         <td>Usuario asociado</td>
         <td class="data text-danger">{{usuario}}</td>
     </tr>
+    <tr>
+        <td>Pacientes asignados</td>
+        <td class="data">{{pacientes_asignados}}</td>
+    </tr>      
   </table>
 </div>
 
@@ -44,6 +54,28 @@
     $(document).ready( function () {
 
     });
+
+    function addPaciente()
+    {
+        var idpaciente = $('#add_paciente').val();
+        var ayn = $('#add_paciente option:selected').html();
+        if (idpaciente)
+        {
+            if (confirm('Desea asignar al paciente '+ayn+' ?'))
+                CtrlAjax.sendCtrl("app","profesional","addPaciente","idpaciente="+idpaciente);
+        }
+        $('#add_paciente option:selected').attr('selected',false);
+    }
+
+    function delPaciente(idpaciente)
+    {
+        var ayn = $('#paayn_'+idpaciente).text();
+        if (idpaciente)
+        {
+            if (confirm('Desea quitar la asignacion del paciente '+ayn+' ?'))
+                CtrlAjax.sendCtrl("app","profesional","delPaciente","idpaciente="+idpaciente);
+        }
+    }
 
 </script>
 

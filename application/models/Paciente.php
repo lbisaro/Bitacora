@@ -179,4 +179,16 @@ class Paciente extends ModelDB
         return $ds;
 
     }
+
+    function getActivos()
+    {
+        $activos = array();
+        $ds = $this->getDataSet('inactivo < 1','ayn');
+        if (!empty($ds))
+        {
+            foreach ($ds as $rw)
+                $activos[$rw['idpaciente']] = $rw;
+        }
+        return $activos;
+    }
 }
