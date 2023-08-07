@@ -207,7 +207,7 @@ class Profesional extends ModelDB
 
     }
 
-    function getPacientesAsignados()
+    function getPacientesAsignados($idpaciente = null)
     {
         if (!$this->data['idprofesional'])
             CriticalExit('Profesional::asignarPaciente() - Se debe especificar un id valido');
@@ -215,6 +215,9 @@ class Profesional extends ModelDB
                 FROM profesional_paciente
                 LEFT JOIN paciente ON paciente.idpaciente = profesional_paciente.idpaciente 
                 WHERE profesional_paciente.idprofesional = '.$this->data['idprofesional'];
+        if ($idpaciente)
+            $qry .= ' AND paciente.idpaciente = '.$idpaciente;
+        $qry .=' ORDER BY inactivo, paciente.ayn';
         $stmt = $this->db->query($qry);
         $pacientes = array();
         while($rw = $stmt->fetch())
@@ -223,4 +226,5 @@ class Profesional extends ModelDB
         } 
         return $pacientes;
     }
+
 }

@@ -113,8 +113,12 @@ class ProfesionalController extends Controller
         }
         foreach ($pacientesAsignados as $idpaciente => $rw)
         {
+            $strInactivo = '';
+            if ($rw['inactivo'])
+                $strInactivo = ' <i class="text-danger small">(Inactivo)</i>';
             $arr['pacientes_asignados'] .= '<div class="paciente_asignado" id="pa_'.$idpaciente.'">
                                             <span id="paayn_'.$idpaciente.'" width="90%">'.$rw['ayn'].'</span>
+                                            '.$strInactivo.'
                                             <button class="btn btn-sm" onclick="delPaciente('.$idpaciente.')"><span class="glyphicon glyphicon-remove-sign text-danger"></span>
                                             </div>';
         }

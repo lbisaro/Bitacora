@@ -16,15 +16,18 @@ class PacienteController extends Controller
     {
         $this->addTitle('Pacientes');
     
-        if (!$auth->isAdmin())
-        {
-            $this->addError('No esta autorizado a visualizar esta pagina.');
-            return null;
-        }
-    
         $pct = new Paciente();
 
-        $ds = $pct->getDataSet(null,'inactivo,ayn');
+        if ($auth->isAdmin())
+        {
+            $ds = $pct->getDataSet(null,'inactivo,ayn');
+        }
+        else
+        {
+            $prf = new Profesional($auth->get('idprofesional'));
+            $ds = $prf->getPacientesAsignados();
+        }
+
         
         $dg = new HtmlTableDg();
         $dg->addHeader('Apellido y Nombre');
@@ -47,14 +50,26 @@ class PacienteController extends Controller
                 $htmlAcciones .= '<button onclick="editar('.$rw['idpaciente'].')" id="btnEditar" class="btn btn-sm btn-secondary" title="Editar datos">
                         <span class="glyphicon glyphicon-pencil"></span>
                         </button>';
-                if (!$rw['inactivo'])
-                    $htmlActivo = '<button onclick="toogleInactivo('.$rw['idpaciente'].')" id="arBtn" class="btn btn-sm btn-success">
-                        <span class="glyphicon glyphicon-ok"></span>
-                        </button>';
+                if ($auth->isAdmin())
+                {
+                    if (!$rw['inactivo'])
+                        $htmlActivo = '<button onclick="toogleInactivo('.$rw['idpaciente'].')" id="arBtn" class="btn btn-sm btn-success">
+                            <span class="glyphicon glyphicon-ok"></span>
+                            </button>';
+                    else
+                        $htmlActivo = '<button onclick="toogleInactivo('.$rw['idpaciente'].')" id="arBtn" class="btn btn-sm btn-danger">
+                            <span class="glyphicon glyphicon-ban-circle"></span>
+                            </button>';
+                    
+                }
                 else
-                    $htmlActivo = '<button onclick="toogleInactivo('.$rw['idpaciente'].')" id="arBtn" class="btn btn-sm btn-danger">
-                        <span class="glyphicon glyphicon-ban-circle"></span>
-                        </button>';
+                {
+                    if (!$rw['inactivo'])
+                        $htmlActivo = '<span class="glyphicon glyphicon-ok text-success"></span>';
+                    else
+                        $htmlActivo = '<span class="glyphicon glyphicon-ban-circle text-danger"></span>';
+                    
+                }
 
                 $dg->addRow(array($rw['ayn'],$rw['mail'],$rw['telefono'],$htmlAcciones,$htmlActivo),$className);
             }
@@ -64,7 +79,7 @@ class PacienteController extends Controller
         $arr['hidden'] = '';
     
         $this->addView('app/pacientes',$arr);
-    }
+    }    
 
     function editar($auth)
     {
@@ -74,7 +89,7 @@ class PacienteController extends Controller
         else
             $this->addTitle('Nuevo Paciente');
 
-        if (!$auth->isAdmin())
+        if (!$auth->checkPaciente($idpaciente))
         {
              $this->adderror('No esta autorizado a visualizar esta pagina.');
              return null;
@@ -106,18 +121,19 @@ class PacienteController extends Controller
         $idpaciente = $_REQUEST['idpaciente'];
         $this->addTitle('Ficha Paciente');
 
-        if (!$auth->isAdmin())
-        {
-             $this->adderror('No esta autorizado a visualizar esta pagina.');
-             return null;
-        }
-
         $pct = new Paciente($idpaciente);
         if (!$idpaciente || $idpaciente != $pct->get('idpaciente'))
         {
              $this->adderror('Se debe especificar un Id valido');
              return null;
+        }        
+
+        if (!$auth->checkPaciente($idpaciente))
+        {
+            $this->adderror('No esta autorizado a visualizar esta pagina.');
+            return null;
         }
+
         
         $this->addTitle($pct->get('ayn'));
 
@@ -127,6 +143,9 @@ class PacienteController extends Controller
         $arr['fecha_alta'] = $pct->get('fecha_alta');
         $arr['fecha_baja'] = $pct->get('baja');
         $arr['idpaciente'] = $idpaciente;
+
+        if (!$pct->isActivo())
+            $arr['flag_inactivo'] = '<h3 class="text-danger text-center">Paciente Inactivo</h3>';
         
         $dg = new HtmlTableDg();
         $dg->setCaption('Eventos');
@@ -158,7 +177,7 @@ class PacienteController extends Controller
         $idpaciente = $_REQUEST['idpaciente'];
         $this->addTitle('Registrar evento');
 
-        if (!$auth->isAdmin())
+        if (!$auth->checkPaciente($idpaciente))
         {
              $this->adderror('No esta autorizado a visualizar esta pagina.');
              return null;
@@ -187,11 +206,21 @@ class PacienteController extends Controller
                 $arr['idtag_opt'] .= '<option value="'.$rw['idtag'].'">'.$rw['tag'].'</option>';
         }
 
-        $prf = new Profesional();
-        $prfAct = $prf->getActivos();
+        if ($auth->isAdmin() && !$_REQUEST['idprofesional'])
+        {
+            $prf = new Profesional();
+            $prfAct = $prf->getActivos();
+            $arr['idprofesional_opt'] = '<option value="0">Seleccionar</option>';
+        }
+        else
+        {   
+            $idprofesional = $auth->get('idprofesional');
+            $prfAct[$idprofesional]['idprofesional'] = $idprofesional;
+            $prfAct[$idprofesional]['ayn'] = $auth->get('ayn');
+        }
+        
         if (!empty($prfAct))
         {
-            $arr['idprofesional_opt'] = '<option value="0">Seleccionar</option>';;
             foreach ($prfAct as $rw)
                 $arr['idprofesional_opt'] .= '<option value="'.$rw['idprofesional'].'">'.$rw['ayn'].'</option>';
         }

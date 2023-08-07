@@ -51,7 +51,8 @@ class Paciente extends ModelDB
         if (!$this->data['telefono'])
             $err[] = 'Se debe especificar Telefono';
 
-
+        if (!$this->data['fecha_baja'])
+            $this->data['fecha_baja'] = '0000-00-00';
         // FIN - Control de errores
 
         if (!empty($err))

@@ -13,13 +13,14 @@
   </div>
   <div class="row">
     <div class="col" style="text-align: right;">
-      <a class="btn btn-success btn-sm menu-admin" href="app.paciente.addLog+idpaciente={{idpaciente}}">Registrar evento</a>
-      <a class="btn btn-info btn-sm menu-admin" href="app.paciente.editar+idpaciente={{idpaciente}}">Editar</a>
+      <a class="btn btn-success btn-sm" href="app.paciente.addLog+idpaciente={{idpaciente}}">Registrar evento</a>
+      <a class="btn btn-info btn-sm" href="app.paciente.editar+idpaciente={{idpaciente}}">Editar</a>
         {{addButtons}}
     </div>
   </div>
 </div>
 <div class="container">
+  {{flag_inactivo}}
   <table class="table table-borderless table_data">
     <tr>
         <td>Fecha de alta</td>

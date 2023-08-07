@@ -35,6 +35,11 @@
         goTo("app.paciente.ficha+idpaciente="+idpaciente);    
     }
 
+    function registrarEvento(idpaciente)
+    {
+        goTo("app.paciente.addLog+idpaciente="+idpaciente+"&idprofesional={{idprofesional}}");    
+    }
+
         
 
 

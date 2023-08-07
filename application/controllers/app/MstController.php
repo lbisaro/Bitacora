@@ -5,6 +5,8 @@ include_once LIB_PATH."HtmlTableDg.php";
 include_once MDL_PATH."Tag.php";
 include_once MDL_PATH."Profesional.php";
 
+
+
 /**
  * Controller: MstController
  * @package SGi_Controllers
@@ -13,12 +15,47 @@ class MstController extends Controller
 {
     function home($auth)
     {
-        $this->addTitle('Home');
+{
+        $this->addTitle('Pacientes Asignados');
+    
+        $pct = new Paciente();
 
-        $arr['data'] = '';
+        $idprofesional = $auth->get('idprofesional');
+        $prf = new Profesional($idprofesional);
+        $ds = $prf->getPacientesAsignados();
+        
+
+        
+        $dg = new HtmlTableDg();
+        $dg->addHeader('Apellido y Nombre');
+        $dg->addHeader('Mail');
+        $dg->addHeader('Telefono');
+        $dg->addHeader('Acciones');
+
+        if (!empty($ds))
+        {
+            foreach ($ds as $rw)
+            {
+                if (!$rw['inactivo'])
+                {
+                    $className = '';
+                    
+                    $htmlAcciones = '<button onclick="registrarEvento('.$rw['idpaciente'].')" id="btnEvento" class="btn btn-sm btn-success">
+                            Registrar Evento
+                            </button>&nbsp;';
+
+
+                    $dg->addRow(array($rw['ayn'],$rw['mail'],$rw['telefono'],$htmlAcciones),$className);
+                }
+            }
+        }
+        
+        $arr['data'] = $dg->get();
+        $arr['idprofesional'] = $idprofesional;
         $arr['hidden'] = '';
-   
-        $this->addView('ver',$arr);
+    
+        $this->addView('app/pacientes',$arr);
+    }
     }
 
     function tags($auth)

@@ -1503,5 +1503,17 @@ class UsrUsuario extends Model
         return false;
     }
 
+    function checkPaciente($idpaciente)
+    {
+        if ($this->isAdmin())
+            return true;
+
+        $prf = new Profesional($this->data['idprofesional']);
+        $ds = $prf->getPacientesAsignados($idpaciente);
+        if (empty($ds))
+            return false;
+        return true;
+    }
+
 }
 ?>
