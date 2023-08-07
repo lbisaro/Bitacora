@@ -21,37 +21,41 @@ class MstController extends Controller
         $pct = new Paciente();
 
         $idprofesional = $auth->get('idprofesional');
-        $prf = new Profesional($idprofesional);
-        $ds = $prf->getPacientesAsignados();
-        
-
-        
-        $dg = new HtmlTableDg();
-        $dg->addHeader('Apellido y Nombre');
-        $dg->addHeader('Mail');
-        $dg->addHeader('Telefono');
-        $dg->addHeader('Acciones');
-
-        if (!empty($ds))
+        if ($idprofesional)
         {
-            foreach ($ds as $rw)
+            
+            $prf = new Profesional($idprofesional);
+            $ds = $prf->getPacientesAsignados();
+            
+
+            
+            $dg = new HtmlTableDg();
+            $dg->addHeader('Apellido y Nombre');
+            $dg->addHeader('Mail');
+            $dg->addHeader('Telefono');
+            $dg->addHeader('Acciones');
+
+            if (!empty($ds))
             {
-                if (!$rw['inactivo'])
+                foreach ($ds as $rw)
                 {
-                    $className = '';
-                    
-                    $htmlAcciones = '<button onclick="registrarEvento('.$rw['idpaciente'].')" id="btnEvento" class="btn btn-sm btn-success">
-                            Registrar Evento
-                            </button>&nbsp;';
+                    if (!$rw['inactivo'])
+                    {
+                        $className = '';
+                        
+                        $htmlAcciones = '<button onclick="registrarEvento('.$rw['idpaciente'].')" id="btnEvento" class="btn btn-sm btn-success">
+                                Registrar Evento
+                                </button>&nbsp;';
 
 
-                    $dg->addRow(array($rw['ayn'],$rw['mail'],$rw['telefono'],$htmlAcciones),$className);
+                        $dg->addRow(array($rw['ayn'],$rw['mail'],$rw['telefono'],$htmlAcciones),$className);
+                    }
                 }
             }
+            
+            $arr['data'] = $dg->get();
+            $arr['idprofesional'] = $idprofesional;
         }
-        
-        $arr['data'] = $dg->get();
-        $arr['idprofesional'] = $idprofesional;
         $arr['hidden'] = '';
     
         $this->addView('app/pacientes',$arr);
