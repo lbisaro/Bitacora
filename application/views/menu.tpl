@@ -35,6 +35,9 @@
         <li class="nav-item">
           <a class="nav-link rounded" href="app.paciente.listar+"><span class="glyphicon glyphicon-folder-open"></span> Pacientes</a>
         </li>        
+        <li class="nav-item">
+          <a class="nav-link rounded" href="app.evento.listar+"><span class="glyphicon glyphicon-th-list"></span> Eventos</a>
+        </li>        
         <li class="nav-item menu-admin">
           <a class="nav-link rounded" href="app.profesional.listar+"><span class="glyphicon glyphicon-tasks"></span> Profesionales</a>
         </li>        

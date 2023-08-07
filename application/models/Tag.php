@@ -7,8 +7,8 @@ class Tag extends ModelDB
 
     protected $pKey  = 'idtag';
 
-    const IDTAG_ALTA = 1;
-    const IDTAG_BAJA = 4;
+    const IDTAG_ACTIVO = 1;
+    const IDTAG_INACTIVO = 2;
 
     function __Construct($id=null)
     {

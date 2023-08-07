@@ -141,7 +141,7 @@ class PacienteController extends Controller
         $arr['mail'] = $pct->get('mail');
         $arr['telefono'] = $pct->get('telefono');
         $arr['fecha_alta'] = $pct->get('fecha_alta');
-        $arr['fecha_baja'] = $pct->get('baja');
+        $arr['fecha_baja'] = '<span class="text-danger">'.$pct->get('fecha_baja').'</span>';
         $arr['idpaciente'] = $idpaciente;
 
         if (!$pct->isActivo())

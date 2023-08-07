@@ -86,7 +86,7 @@ class Paciente extends ModelDB
         {
             if (!$this->tableInsert(DB_NAME,'paciente'))
                 $err++;
-            $this->addLog(Tag::IDTAG_ALTA,0,'',date('Y-m-d'));
+            $this->addLog(Tag::IDTAG_ACTIVO,0,'',date('Y-m-d'));
         }
         else       // update
         {
@@ -103,10 +103,18 @@ class Paciente extends ModelDB
         if ($this->data['idpaciente'])
         {
             if ($this->data['inactivo']>0)
-                $upd = 'UPDATE paciente SET inactivo = 0 WHERE idpaciente = '.$this->data['idpaciente'];
+            {
+                $upd = 'UPDATE paciente SET inactivo = 0, fecha_baja = NULL WHERE idpaciente = '.$this->data['idpaciente'];
+                $this->db->query($upd);
+                $this->addLog(Tag::IDTAG_ACTIVO,0,'',date('Y-m-d'));
+            }
             else
-                $upd = 'UPDATE paciente SET inactivo = 1 WHERE idpaciente = '.$this->data['idpaciente'];
-            $this->db->query($upd);
+            {
+                $upd = "UPDATE paciente SET inactivo = 1, fecha_baja = '".date('Y-m-d')."' WHERE idpaciente = ".$this->data['idpaciente'];
+                $this->db->query($upd);
+                $this->addLog(Tag::IDTAG_INACTIVO,0,'',date('Y-m-d'));
+
+            }
             return true;
         }
         return false;
