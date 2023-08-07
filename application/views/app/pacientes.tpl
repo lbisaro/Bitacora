@@ -3,7 +3,7 @@
 <div class="container">
   <div class="row">
     <div class="col" style="text-align: right;">
-      <a class="btn btn-primary btn-sm menu-admin" href="app.Paciente.editar+">Crear nuevo</a>
+      <a class="btn btn-primary btn-sm menu-admin" href="app.Paciente.editar+">Crear nuevo Paciente</a>
     </div>
   </div>
 </div>
