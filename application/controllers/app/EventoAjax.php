@@ -56,7 +56,7 @@ class EventoAjax extends ControllerAjax
         $evnt = new Evento();
         if ($evnt->delete($idpacientelog))
             $this->ajxRsp->script('regresar()');
-
-        if 
+        else
+            $this->ajxRsp->addError('No fue posible eliminar el registro');
     }
 }

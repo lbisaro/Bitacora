@@ -177,7 +177,7 @@ class PacienteController extends Controller
             $arr['log'] .= '<div class="container"><a class="text-primary" href="app.evento.home+idpaciente='.$idpaciente.'">Ver todos los eventos del paciente</a>';
         }
         $arr['data'] = '';
-        $arr['hidden'] = Html::getTagInput('idpaciente',$idpaciente,'_hidden');
+        $arr['hidden'] = Html::getTagInput('idpaciente',$idpaciente,'hidden');
    
         $this->addView('app/pacientes_ficha',$arr);
     }

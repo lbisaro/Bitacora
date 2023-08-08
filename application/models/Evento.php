@@ -39,7 +39,7 @@ class Evento
     {
         if (!$idpacientelog)
             return null;
-        
+
         $qry = $this->qryBase." WHERE idpacientelog = '".$idpacientelog."' ";
         $stmt = $this->db->query($qry);
         return $stmt->fetch(); 
@@ -133,5 +133,22 @@ class Evento
             $stmt = $this->db->query($qry);
             return $stmt->fetchAll();   
         }
+    }
+
+    function delete($idpacientelog)
+    {
+        if (!$idpacientelog)
+            CriticalExit('Evento::delete() - Se debe especificar un ID valido');
+
+        $auth = UsrUsuario::getAuthInstance();
+        $ds = $this->get($idpacientelog);
+        if ($ds['idpacientelog'] == $idpacientelog && $auth->isAdmin() || $ds['idusuario'] == $auth->get('idusuario'))
+        {
+            $del = "DELETE FROM paciente_log WHERE idpacientelog = '".$idpacientelog."'";
+            $this->db->query($del);
+            return true;
+        }
+        return false;
+
     }
 }
