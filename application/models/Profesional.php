@@ -210,7 +210,7 @@ class Profesional extends ModelDB
     function getPacientesAsignados($idpaciente = null)
     {
         if (!$this->data['idprofesional'])
-            CriticalExit('Profesional::asignarPaciente() - Se debe especificar un id valido');
+            CriticalExit('Profesional::getPacientesAsignados() - Se debe especificar un id valido');
         $qry = 'SELECT paciente.* 
                 FROM profesional_paciente
                 LEFT JOIN paciente ON paciente.idpaciente = profesional_paciente.idpaciente 

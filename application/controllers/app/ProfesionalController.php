@@ -131,28 +131,6 @@ class ProfesionalController extends Controller
             $arr['pacientes_asignados'] .= '</select>';
         }
 
-        /*
-        $dg = new HtmlTableDg();
-        $dg->setCaption('Eventos');
-        $log = $prf->getLog();
-        $dg->addHeader('Evento',$class=null,$width='20%');
-        $dg->addHeader('Notas');
-        foreach ($log as $rw)
-        {
-            $evento = dateToStr($rw['fecha']);
-            if ($rw['profesional_ayn'])
-                $evento .= '<br/><b>'.$rw['profesional_ayn'].'</b>';
-            $evento .= '<br/><span class="text-secondary">'.$rw['username'].'</span>';
-
-            $notas = '<b>'.$rw['tag'].'</b>';
-            $notas = '<b>'.$rw['paciente_ayn'].'</b>';
-            if ($rw['notas'])
-                $notas .= '<br/>'.nl2br($rw['notas']);
-            $dg->addRow(array($evento,$notas));
-        }
-
-        $arr['log'] = $dg->get();
-        */
         $arr['data'] = '';
         $arr['hidden'] = '';
    

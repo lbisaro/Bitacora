@@ -149,6 +149,7 @@ class Paciente extends ModelDB
                 $this->errLog->add('Se deben especificar Notas');
             
         }
+        $notas = htmlentities($notas, ENT_QUOTES);
 
         if (!empty($this->getErrLog($reset=false)))
             return false;
@@ -171,7 +172,7 @@ class Paciente extends ModelDB
         return (empty($this->data['inactivo']));
     }
 
-    function getLog()
+    function getLog($limit=null)
     {
         $qry = "SELECT paciente_log.*,
                        tag.tag,
@@ -183,6 +184,8 @@ class Paciente extends ModelDB
                 LEFT JOIN usuario ON usuario.idusuario = paciente_log.idusuario
                 WHERE paciente_log.idpaciente = ".$this->data['idpaciente']."
                 ORDER BY datetime DESC";
+        if ($limit)
+            $qry .= ' LIMIT '.$limit;
         $stmt = $this->db->query($qry);
         $ds = $stmt->fetchAll();
         return $ds;

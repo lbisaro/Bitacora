@@ -2,6 +2,9 @@
   .data {
     font-weight: bolder;
   }
+  #log tr {
+      cursor: pointer;
+  }
 </style>
 <div class="container">
   <div class="row">
@@ -38,13 +41,17 @@
 </div>
 
 {{log}}
+{{hidden}}
 
 <input type="hidden" name="idpaciente" id="idpaciente" value="{{idpaciente}}">
 
 <script language="javascript" >
 
     $(document).ready( function () {
-
+        $('#log tr td').on('click',function () {
+            var id = $(this).parent().attr('id');
+            goTo("app.evento.ver+id="+id+"&returnTo=app.paciente.ficha");
+        })
     });
 
 </script>

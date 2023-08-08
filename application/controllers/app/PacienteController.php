@@ -147,9 +147,9 @@ class PacienteController extends Controller
         if (!$pct->isActivo())
             $arr['flag_inactivo'] = '<h3 class="text-danger text-center">Paciente Inactivo</h3>';
         
-        $dg = new HtmlTableDg();
+        $dg = new HtmlTableDg('log');
         $dg->setCaption('Eventos');
-        $log = $pct->getLog();
+        $log = $pct->getLog($limit=5);
         $dg->addHeader('Evento',$class=null,$width='20%');
         $dg->addHeader('Notas');
         foreach ($log as $rw)
@@ -161,13 +161,23 @@ class PacienteController extends Controller
 
             $notas = '<b>'.$rw['tag'].'</b>';
             if ($rw['notas'])
-                $notas .= '<br/>'.nl2br($rw['notas']);
-            $dg->addRow(array($evento,$notas));
+            {
+                $limitar = 150;
+                if (strlen($rw['notas'])>$limitar)
+                    $notas .= '<br/>'.substr($rw['notas'],0,$limitar).'...';
+                else
+                    $notas .= '<br/>'.nl2br($rw['notas']);
+            }
+            $dg->addRow(array($evento,$notas),$class=null,$height=null,$valign=null,$id=$rw['idpacientelog']);
         }
 
         $arr['log'] = $dg->get();
+        if (!empty($log))
+        {
+            $arr['log'] .= '<div class="container"><a class="text-primary" href="app.evento.home+idpaciente='.$idpaciente.'">Ver todos los eventos del paciente</a>';
+        }
         $arr['data'] = '';
-        $arr['hidden'] = '';
+        $arr['hidden'] = Html::getTagInput('idpaciente',$idpaciente,'_hidden');
    
         $this->addView('app/pacientes_ficha',$arr);
     }
