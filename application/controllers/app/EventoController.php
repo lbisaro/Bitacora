@@ -115,10 +115,13 @@ class EventoController extends Controller
              return null;
         }        
 
-        if ($auth->isAdmin() || $auth->get('idusuario') == $ds['idusuario'])
+        if (empty($ds['sysid']))
         {
-            $arr['addButtons'] .= ' <button class="btn btn-primary btn-sm" onclick="editar()">Editar</button>';
-            $arr['addButtons'] .= ' <button class="btn btn-danger btn-sm" onclick="eliminar()">Eliminar</button>';
+            if ($auth->isAdmin() || $auth->get('idusuario') == $ds['idusuario'] )
+            {
+                //$arr['addButtons'] .= ' <button class="btn btn-primary btn-sm" onclick="editar()">Editar</button>';
+                $arr['addButtons'] .= ' <button class="btn btn-danger btn-sm" onclick="eliminar()">Eliminar</button>';
+            }
         }
 
         if ($returnTo)
@@ -150,6 +153,5 @@ class EventoController extends Controller
     
         $this->addView('app/evento_ver',$arr);
     }
-    
     
 }

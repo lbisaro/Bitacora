@@ -49,7 +49,7 @@ class ProfesionalController extends Controller
                         </button>';
                 if (!$rw['username'])
                     $htmlAcciones .= '&nbsp;<button onclick="crearUsuario('.$rw['idprofesional'].')" id="btnUsr" class="btn btn-sm btn-success" title="Crear Usuario">
-                            <span class="glyphicon glyphicon-tasks"></span>
+                            <span class="glyphicon glyphicon-user"></span>
                             </button>';
 
 
@@ -62,7 +62,10 @@ class ProfesionalController extends Controller
                         <span class="glyphicon glyphicon-ban-circle"></span>
                         </button>';
 
-                $dg->addRow(array($rw['ayn'],$rw['mail'],$rw['username'],$rw['telefono'],$rw['cargo'],$htmlAcciones,$htmlActivo),$className);
+                $userAdmin = '';
+                if ($rw['idperfil'] == UsrUsuario::USUARIO_ADM)
+                    $userAdmin = ' <span class="glyphicon glyphicon-ok-circle"></span>';
+                $dg->addRow(array($rw['ayn'],$rw['mail'],$rw['username'].$userAdmin,$rw['telefono'],$rw['cargo'],$htmlAcciones,$htmlActivo),$className);
             }
         }
         
@@ -99,9 +102,9 @@ class ProfesionalController extends Controller
         $arr['idprofesional'] = $idprofesional;
 
         if (!$prf->get('username'))
-            $arr['usuario'] = '<a class="btn btn-success btn-sm menu-admin" href="usr.usr.editar+idprofesional={{idprofesional}}"><span class="glyphicon glyphicon-tasks"></span> Crear Usuario</a>';
+            $arr['usuario'] = '<a class="btn btn-success btn-sm menu-admin" href="usr.usr.editar+idprofesional={{idprofesional}}"><span class="glyphicon glyphicon-user"></span> Crear Usuario</a>';
         else
-            $arr['usuario'] = '<span class="text-primary"><span class="glyphicon glyphicon-ok-circle"></span> '.$prf->get('username').'<span>';
+            $arr['usuario'] = '<span class="text-primary"><span class="glyphicon glyphicon-user"></span> '.$prf->get('username').'<span>';
 
         $pacientesAsignados = $prf->getPacientesAsignados();
         $pct = new Paciente();

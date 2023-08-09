@@ -20,6 +20,7 @@ class Evento
 
     protected $qryBase = "SELECT paciente_log.*,
                                  tag.tag,
+                                 tag.sysid,
                                  usuario.username,
                                  paciente.ayn as paciente_ayn, 
                                  profesional.ayn as profesional_ayn
@@ -77,20 +78,20 @@ class Evento
                     $whereIn = '';
                     foreach ($pacientesAsignados as $rw)
                     {
-                        $whereIn .= ($arr['idpaciente']?',':'').$rw['idpaciente'];
+                        $whereIn .= ($whereIn?',':'').$rw['idpaciente'];
                     }
                     $qryWhere .= " AND paciente_log.idpaciente in (".$whereIn.")";
                 }
             }
         }
-        elseif ($arr['idpaciente']=='available')
+        elseif ($arr['idpaciente']=='asignados')
         {
             if (!empty($pacientesAsignados))
             {
                 $whereIn = '';
                 foreach ($pacientesAsignados as $rw)
                 {
-                    $whereIn .= ($arr['idpaciente']?',':'').$rw['idpaciente'];
+                    $whereIn .= ($whereIn?',':'').$rw['idpaciente'];
                 }
                 $qryWhere .= " AND paciente_log.idpaciente in (".$whereIn.")";
             }

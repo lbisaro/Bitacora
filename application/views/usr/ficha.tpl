@@ -14,7 +14,7 @@
   <div class="row">
     <div class="col" style="text-align: right;">
       {{addButtons}}
-      <a class="btn btn-info btn-sm menu-admin" href="usr.usr.editar+idusuario={{idusuario}}">Editar</a>
+      <a class="btn btn-primary btn-sm menu-admin" href="usr.usr.editar+idusuario={{idusuario}}">Editar</a>
       <button class="btn btn-secondary btn-sm menu-admin" onclick="resetPassword({{idusuario}})">Resetear Password</button>
         
     </div>

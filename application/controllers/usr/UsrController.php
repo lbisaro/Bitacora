@@ -102,7 +102,7 @@ class UsrController extends Controller
                         </button>';
                 if (!$rw['idprofesional'])
                     $htmlAcciones .= '&nbsp;<button onclick="creaProfesional('.$rw['idusuario'].')" id="btnPrf" class="btn btn-sm btn-success" title="Crear Nuevo Profesional">
-                            <span class="glyphicon glyphicon-tasks"></span>
+                            <span class="glyphicon glyphicon-education"></span>
                             </button>';
 
 
@@ -159,7 +159,8 @@ class UsrController extends Controller
 
         $opt = UsrUsuario::getTiposDeUsuario();
         foreach ($opt as $k=>$v)
-            $arr['idperfil_opt'] .= '<option value="'.$k.'" '.($usr->get('idperfil')==$k?' SELECTED ':'').'>'.$v.'</option>';
+            if ($k != UsrUsuario::USUARIO_CNS)
+                $arr['idperfil_opt'] .= '<option value="'.$k.'" '.($usr->get('idperfil')==$k?' SELECTED ':'').'>'.$v.'</option>';
         $arr['idusuario'] = $idusuario;
    
         $arr['data'] = '';
@@ -194,7 +195,7 @@ class UsrController extends Controller
         $arr['idusuario'] = $idusuario;
 
         if (!$usr->get('idprofesional'))
-            $arr['profesional'] = '<a class="btn btn-success btn-sm menu-admin" href="app.profesional.editar+idusuario={{idusuario}}"><span class="glyphicon glyphicon-tasks"></span> Crear Profesional</a>';
+            $arr['profesional'] = '<a class="btn btn-success btn-sm menu-admin" href="app.profesional.editar+idusuario={{idusuario}}"><span class="glyphicon glyphicon-education"></span> Crear Profesional</a>';
         else
             $arr['profesional'] = '<span class="text-primary"><span class="glyphicon glyphicon-ok-circle"></span><span>';
         

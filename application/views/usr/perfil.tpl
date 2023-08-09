@@ -1,6 +1,6 @@
 <div class="container col-10 pt-3">
     <h5 class="bd-title">
-        <span class="glyphicon glyphicon-user"></span> Cuenta  
+        <span class="glyphicon glyphicon-cog"></span> Perfil  
     </h5>
         <div class="form-group row">
             <label for="ayn" class="col-sm-2 col-form-label">Nombre y Apellido</label>

@@ -19,7 +19,7 @@
   </div>
   <div class="row">
     <div class="col" style="text-align: right;">
-      <a class="btn btn-info btn-sm menu-admin" href="app.profesional.editar+idprofesional={{idprofesional}}">Editar</a>
+      <a class="btn btn-primary btn-sm menu-admin" href="app.profesional.editar+idprofesional={{idprofesional}}">Editar</a>
         {{addButtons}}
     </div>
   </div>
@@ -34,7 +34,7 @@
     </tr>
     <tr>
         <td>Cargo</td>
-        <td class="data text-success">{{cargo}}</td>
+        <td class="data ">{{cargo}}</td>
         <td>Usuario asociado</td>
         <td class="data text-danger">{{usuario}}</td>
     </tr>

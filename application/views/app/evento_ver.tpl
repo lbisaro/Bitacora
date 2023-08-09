@@ -20,11 +20,11 @@
 <div class="container">
   <table class="table table-borderless table_data">
     <tr>
-        <td>Paciente</td>
+        <td width="20%">Paciente</td>
         <td class="data">{{paciente_ayn}}</td>
     </tr>
     <tr>
-        <td>Prosional</td>
+        <td>Profesional</td>
         <td class="data">{{profesional_ayn}}</td>
     </tr>
     <tr>

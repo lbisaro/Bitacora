@@ -1,4 +1,3 @@
-
 <script language="javascript" >
 
     {{server_entorno}}
@@ -39,16 +38,16 @@
           <a class="nav-link rounded" href="app.evento.home+"><span class="glyphicon glyphicon-th-list"></span> Eventos</a>
         </li>        
         <li class="nav-item menu-admin">
-          <a class="nav-link rounded" href="app.profesional.listar+"><span class="glyphicon glyphicon-tasks"></span> Profesionales</a>
+          <a class="nav-link rounded" href="app.profesional.listar+"><span class="glyphicon glyphicon-education"></span> Profesionales</a>
         </li>        
         <li class="nav-item menu-admin">
-          <a class="nav-link rounded" href="app.Mst.tags+"><span class="glyphicon glyphicon-cog"></span> Tags</a>
+          <a class="nav-link rounded" href="app.Mst.tags+"><span class="glyphicon glyphicon-tags"></span> Tags</a>
         </li>         
         <li class="nav-item menu-admin">
-          <a class="nav-link rounded" href="usr.Usr.usuarios+"><span class="glyphicon glyphicon-cog"></span> Usuarios</a>
+          <a class="nav-link rounded" href="usr.Usr.usuarios+"><span class="glyphicon glyphicon-user"></span> Usuarios</a>
         </li>         
         <li class="nav-item">
-          <a class="nav-link rounded" href="usr.Usr.perfil+"><span class="glyphicon glyphicon-user"></span> Perfil</a>
+          <a class="nav-link rounded" href="usr.Usr.perfil+"><span class="glyphicon glyphicon-cog"></span> Perfil</a>
         </li>
         <li class="nav-item">
           <a class="nav-link rounded" href="usr.Usr.logout+"><span class="glyphicon glyphicon-log-out"></span> Salir</a>

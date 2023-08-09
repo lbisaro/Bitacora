@@ -34,13 +34,14 @@ class EventoAjax extends ControllerAjax
                 $evento = dateToStr($rw['fecha']);
                 if ($rw['profesional_ayn'])
                     $evento .= '<br/><b>'.$rw['profesional_ayn'].'</b>';
-                $evento .= '<br/><i class="text-secondary text-small">'.$rw['username'].' '.dateToStr($rw['datetime'],true).'</i>';
+                $user_sign = '<small class="text-secondary">'.$rw['username'].' '.dateToStr($rw['datetime'],true).'</small>';
                 
                 $paciente = $rw['paciente_ayn'];
 
-                $notas = '<b>'.$rw['tag'].'</b>';
+                $notas = '<b class="'.($rw['sysid']?"text-secondary":"").'">'.$rw['tag'].'</b>';
                 if ($rw['notas'])
                     $notas .= '<br/>'.nl2br($rw['notas']);
+                $notas .= '<div class="text-right">'.$user_sign.'<div>';
                 $dg->addRow(array($evento,$paciente,$notas),$class=null,$height=null,$valign=null,$id=$rw['idpacientelog']);
             }
         }

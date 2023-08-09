@@ -14,7 +14,7 @@
 </div>
 <div class="container">
     <div class="row">
-        <div class="row-sm">
+        <div class="col-sm">
             <div class="form-group">
                 <label for="idpaciente">Paciente</label>
                 <div class="input-group mb-2">
@@ -26,7 +26,7 @@
             
         </div>        
         {{html_select_profesional}}      
-        <div class="row-sm">
+        <div class="col-sm">
             <div class="form-group">
                 <label for="from-to">Fecha desde</label>
                 <div class="input-group mb-2">
@@ -35,7 +35,7 @@
             </div>
             
         </div>
-        <div class="row-sm">
+        <div class="col-sm">
             <div class="form-group">
                 <label for="from-to">Fecha hasta</label>
                 <div class="input-group mb-2">
@@ -47,12 +47,7 @@
     </div>
 
 </div>
-<div class="container">
-    <div class="row">
-        <div class="col-sm" id="eventos">
-            <span class="text-secondary">Seleccione los filtros para listar eventos registrados</span>
-        </div>
-    </div>
+<div id="eventos">
 </div>
 
 <script language="javascript" >

@@ -133,7 +133,8 @@ require($addIndex);
 Sql::close();
 
 //Solo muestra codigo si se establecio alguna info mediante addTimeDebug($str) o addTimeDebugBacktrace() 
-echo getTimeDebug();
+if (SERVER_ENTORNO == 'Test')
+    echo getTimeDebug();
 
 
 ?>

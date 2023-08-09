@@ -6,7 +6,8 @@ class Profesional extends ModelDB
 {
     protected $query = "SELECT profesional.*,
                                usuario.idusuario,
-                               usuario.username  
+                               usuario.username,
+                               usuario.idperfil 
                         FROM profesional
                         LEFT JOIN usuario ON usuario.mail = profesional.mail";
 

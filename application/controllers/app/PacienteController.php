@@ -24,8 +24,12 @@ class PacienteController extends Controller
         }
         else
         {
-            $prf = new Profesional($auth->get('idprofesional'));
-            $ds = $prf->getPacientesAsignados();
+            if ($idprofesional = $auth->get('idprofesional'))
+            {
+                $prf = new Profesional($idprofesional);
+                $ds = $prf->getPacientesAsignados();
+                
+            }
         }
 
         
@@ -157,7 +161,7 @@ class PacienteController extends Controller
             $evento = dateToStr($rw['fecha']);
             if ($rw['profesional_ayn'])
                 $evento .= '<br/><b>'.$rw['profesional_ayn'].'</b>';
-            $evento .= '<br/><span class="text-secondary">'.$rw['username'].'</span>';
+            $user_sign = '<small class="text-secondary">'.$rw['username'].' '.dateToStr($rw['datetime'],true).'</small>';
 
             $notas = '<b>'.$rw['tag'].'</b>';
             if ($rw['notas'])
@@ -168,6 +172,7 @@ class PacienteController extends Controller
                 else
                     $notas .= '<br/>'.nl2br($rw['notas']);
             }
+            $notas .= '<div class="text-right">'.$user_sign.'<div>';
             $dg->addRow(array($evento,$notas),$class=null,$height=null,$valign=null,$id=$rw['idpacientelog']);
         }
 
