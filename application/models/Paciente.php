@@ -52,7 +52,7 @@ class Paciente extends ModelDB
             $err[] = 'Se debe especificar Telefono';
 
         if (!$this->data['fecha_baja'])
-            $this->data['fecha_baja'] = '0000-00-00';
+            $this->data['fecha_baja'] = null;
         // FIN - Control de errores
 
         if (!empty($err))
